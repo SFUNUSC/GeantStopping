@@ -1,0 +1,17 @@
+/Projectile/A 22
+/Projectile/Z 10
+/Projectile/KE 30 MeV
+/Projectile/Focus/X 0. mm
+/Projectile/Focus/Y 0. mm
+/Projectile/Focus/Z -50. mm
+/Projectile/Focus/DX 0. mm
+/Projectile/Focus/DY 0. mm
+/Backing/Material G4_Au
+/Backing/Thickness 14.9 um
+/Backing/NStep 1
+/Backing/Report
+/Trigger/SetTrigger 1
+/run/beamOn 30000
+/Results/Tree/Report
+/Results/Tree/Save test.root
+/Projectile/Report
