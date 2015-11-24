@@ -69,7 +69,7 @@ private:
   DetectorConstruction* theDetector;
 
   IonStat       stat;
-  IonInf        gun,rBIn,rBOut,rStop; //ion tracking (projectile)
+  IonInf        gun,rTIn,rTOut,rStop; //ion tracking (projectile)
   G4int         Ap,Zp;
 
   size_t soi,sos;

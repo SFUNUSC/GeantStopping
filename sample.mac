@@ -6,12 +6,12 @@
 /Projectile/Focus/Z -50. mm
 /Projectile/Focus/DX 0. mm
 /Projectile/Focus/DY 0. mm
-/Backing/Material G4_Au
-/Backing/Thickness 14.9 um
-/Backing/NStep 1
-/Backing/Report
+/Target/Material G4_Au
+/Target/Thickness 100 um
+/Target/NStep 1
+/Target/Report
 /Trigger/SetTrigger 1
-/run/beamOn 30000
+/run/beamOn 500000
 /Results/Tree/Report
-/Results/Tree/Save test.root
+/Results/Tree/Save SRIMstopping.root
 /Projectile/Report

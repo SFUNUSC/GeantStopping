@@ -30,7 +30,6 @@
 #include "Projectile.hh"
 #include "Projectile_Messenger.hh"
 #include "RunAction.hh"
-#include "SteppingAction.hh"
 
 int main(int argc,char** argv) 
 {
@@ -74,45 +73,37 @@ int main(int argc,char** argv)
   EventAction* eventAction = new EventAction(results,theRunAction,theProjectile);
   runManager->SetUserAction(eventAction);
   EventAction_Messenger* eventActionMessenger;
-  eventActionMessenger = new EventAction_Messenger(eventAction);
+  eventActionMessenger = new EventAction_Messenger(eventAction); 
 
-  SteppingAction* stepAction = new SteppingAction(theDetector,eventAction);
-  runManager->SetUserAction(stepAction);
+  G4UIsession* session=0;
 
- 
-
- G4UIsession* session=0;
-
-#ifdef G4VIS_USE  
- G4VisManager* visManager = new VisManager; 
-#endif  
+  #ifdef G4VIS_USE  
+  G4VisManager* visManager = new VisManager; 
+  #endif  
 
   if (argc==1)   // Define UI session for interactive mode.
     {
 
-#ifdef G4VIS_USE
-  // visualization manager
-  visManager->Initialize();
-#endif
+      #ifdef G4VIS_USE
+      // visualization manager
+      visManager->Initialize();
+      #endif
 
       // G4UIterminal is a (dumb) terminal.
-#ifdef G4UI_USE_ROOT
-  // G4URoot is a ROOT based GUI.
-  session = new G4UIRoot(argc,argv);
-#else
-#ifdef G4UI_USE_XM
+      #ifdef G4UI_USE_ROOT
+      // G4URoot is a ROOT based GUI.
+      session = new G4UIRoot(argc,argv);
+      #else
+      #ifdef G4UI_USE_XM
       session = new G4UIXm(argc,argv);
-#else           
-#ifdef G4UI_USE_TCSH
+      #else           
+      #ifdef G4UI_USE_TCSH
       session = new G4UIterminal(new G4UItcsh);      
-#else
+      #else
       session = new G4UIterminal();
-#endif
-#endif
-#endif
-    
-  
-
+      #endif
+      #endif
+      #endif
     }
 
   // Initialize G4 kernel
@@ -126,8 +117,8 @@ int main(int argc,char** argv)
       // G4UIterminal is a (dumb) terminal.
       
       #ifdef G4UI_USE_XM
-      //   Customize the G4UIXm menubar with a macro file :
-           UI->ApplyCommand("/control/execute gui/gui.mac");
+      // Customize the G4UIXm menubar with a macro file :
+      UI->ApplyCommand("/control/execute gui/gui.mac");
       #endif
       session->SessionStart();
       delete session;
@@ -139,16 +130,13 @@ int main(int argc,char** argv)
       UI->ApplyCommand(command+fileName);
     }
 
-
-
-
-
   // job termination
-  if(argc==1){
-#ifdef G4VIS_USE
-  delete visManager;
-#endif
-  }
+  if(argc==1)
+    {
+      #ifdef G4VIS_USE
+      delete visManager;
+      #endif
+    }
 
   
   delete ProjectileMessenger;

@@ -62,7 +62,7 @@ G4VPhysicalVolume* DetectorConstruction::Construct()
    SDman->AddNewDetector( TrackerIon );
    
    //make everything sensitive to ions
-   theTarget->GetBackingLog()->SetSensitiveDetector(TrackerIon);
+   theTarget->GetTargetLog()->SetSensitiveDetector(TrackerIon);
    ExpHall_log->SetSensitiveDetector(TrackerIon);
  
    return ExpHall_phys;

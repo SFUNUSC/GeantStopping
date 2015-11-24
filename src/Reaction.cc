@@ -26,17 +26,7 @@ G4VParticleChange* Reaction::PostStepDoIt(
 			    )
 			    			    			    
 {
-
-
   aParticleChange.Initialize(aTrack);
-//
-// Stop the current particle, if requested by G4UserLimits 
-// 
-  if(reaction_here)
-    {
-
-    }
-   
   return &aParticleChange;
 }
 //-----------------------------------------------------------------
@@ -87,17 +77,4 @@ G4double Reaction::PostStepGetPhysicalInteractionLength(
   
 
   return DBL_MAX;
-}
-//---------------------------------------------------------
-void Reaction::TargetFaceCrossSection()
-{
-
-  G4int DA=0,DZ=0;
-  A1=theProjectile->getA();
-  Z1=theProjectile->getZ(); 
-
-  //set properties (including gamma decay processes) of the residual
-  residual=G4ParticleTable::GetParticleTable()->GetIon(Z1,A1,0.0);
-  //getc(stdin);
-
 }

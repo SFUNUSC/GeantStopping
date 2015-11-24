@@ -37,64 +37,58 @@ G4bool TrackerIonSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   theTrack=aStep->GetTrack();
 
   
- G4StepPoint*   vi;
- G4StepPoint*   vf;
+  G4StepPoint*   vi;
+  G4StepPoint*   vf;
 
- const G4DynamicParticle* aParticle= theTrack->GetDynamicParticle();
- const G4String type =  aParticle->GetDefinition()->GetParticleType();
- const G4double len=aStep->GetStepLength();
+  const G4DynamicParticle* aParticle= theTrack->GetDynamicParticle();
+  const G4String type =  aParticle->GetDefinition()->GetParticleType();
+  const G4double len=aStep->GetStepLength();
 
- G4String pName;
- if (theTrack->GetCreatorProcess()!=NULL)
+  G4String pName;
+  if (theTrack->GetCreatorProcess()!=NULL)
     pName=theTrack->GetCreatorProcess()->GetProcessName();
   else
     pName="Unknown";
 
 
   if(type=="nucleus")
-   {     
-
-     vi=aStep->GetPreStepPoint(); 
-     vf=aStep->GetPostStepPoint();   
-     G4String vname=vi->GetPhysicalVolume()->GetName();
-     if(len>0.)
-	 {
-	   TrackerIonHit* newIonHitI= new TrackerIonHit();
+    {
+      vi=aStep->GetPreStepPoint(); 
+      vf=aStep->GetPostStepPoint();   
+      G4String vname=vi->GetPhysicalVolume()->GetName();
+        if(len>0.)
+	        {
+	          TrackerIonHit* newIonHitI= new TrackerIonHit();
 	   
-	   newIonHitI->SetVolName(vname);
-	   newIonHitI->SetBeta(vi->GetBeta());
-	   newIonHitI->SetKE(vi->GetKineticEnergy());
-	   newIonHitI->SetPos(vi->GetPosition());
-	   newIonHitI->SetMom(vi->GetMomentum());
-	   newIonHitI->SetA(aParticle->GetParticleDefinition()->GetAtomicMass());
-	   newIonHitI->SetZ(aParticle->GetParticleDefinition()->GetAtomicNumber());
-	   newIonHitI->SetWeight(aStep->GetTrack()->GetWeight());
-	   newIonHitI->Draw();
-	   ionCollection->insert(newIonHitI);
-	 }
-
-     G4TrackStatus TrackStatus;
-     TrackStatus=aStep->GetTrack()->GetTrackStatus();
-     if(TrackStatus==fStopButAlive||TrackStatus==fStopAndKill)
-       {
-	 TrackerIonHit* newIonHitF= new TrackerIonHit();	
+	          newIonHitI->SetVolName(vname);
+	          newIonHitI->SetBeta(vi->GetBeta());
+	          newIonHitI->SetKE(vi->GetKineticEnergy());
+	          newIonHitI->SetPos(vi->GetPosition());
+	          newIonHitI->SetMom(vi->GetMomentum());
+	          newIonHitI->SetA(aParticle->GetParticleDefinition()->GetAtomicMass());
+	          newIonHitI->SetZ(aParticle->GetParticleDefinition()->GetAtomicNumber());
+	          newIonHitI->SetWeight(aStep->GetTrack()->GetWeight());
+	          newIonHitI->Draw();
+	          ionCollection->insert(newIonHitI);
+	        }
+      G4TrackStatus TrackStatus;
+      TrackStatus=aStep->GetTrack()->GetTrackStatus();
+      if(TrackStatus==fStopButAlive||TrackStatus==fStopAndKill)
+        {
+	        TrackerIonHit* newIonHitF= new TrackerIonHit();	
 	 
-	 newIonHitF->SetVolName(vname);
-	 newIonHitF->SetBeta(vf->GetBeta());
-	 newIonHitF->SetKE(vf->GetKineticEnergy());
-	 newIonHitF->SetMom(vf->GetMomentum());
-	 newIonHitF->SetPos(vf->GetPosition());
-	 newIonHitF->SetA(aParticle->GetParticleDefinition()->GetAtomicMass());
-	 newIonHitF->SetZ(aParticle->GetParticleDefinition()->GetAtomicNumber());
-	 newIonHitF->SetWeight(aStep->GetTrack()->GetWeight());
-	 newIonHitF->Draw();
-	 ionCollection->insert(newIonHitF);
-       }
-
-   
-   }
-
- 
+       	  newIonHitF->SetVolName(vname);
+	        newIonHitF->SetBeta(vf->GetBeta());
+	        newIonHitF->SetKE(vf->GetKineticEnergy());
+	        newIonHitF->SetMom(vf->GetMomentum());
+	        newIonHitF->SetPos(vf->GetPosition());
+	        newIonHitF->SetA(aParticle->GetParticleDefinition()->GetAtomicMass());
+	        newIonHitF->SetZ(aParticle->GetParticleDefinition()->GetAtomicNumber());
+	        newIonHitF->SetWeight(aStep->GetTrack()->GetWeight());
+	        newIonHitF->Draw();
+	        ionCollection->insert(newIonHitF);
+        } 
+    }
   
   return true;
 }
@@ -114,14 +108,11 @@ void TrackerIonSD::EndOfEvent(G4HCofThisEvent* HCE)
 
       for (i=0;i<NbHits-1;i++) 
 	      {
-
 	        if ((*ionCollection)[i]->GetA()==(*ionCollection)[i+1]->GetA())
 	          if ((*ionCollection)[i]->GetZ()==(*ionCollection)[i+1]->GetZ())
-	            if ((*ionCollection)[i]->GetVolName()=="target"&&(*ionCollection)[i+1]->GetVolName()=="backing")
+	            if ((*ionCollection)[i]->GetVolName()=="expHall"&&(*ionCollection)[i+1]->GetVolName()=="backing")
 		            (*ionCollection)[i+1]->SetBackingInFlag();
      	  }
-
-	
 
       for (i=1;i<NbHits;i++) 
         {   
@@ -130,7 +121,14 @@ void TrackerIonSD::EndOfEvent(G4HCofThisEvent* HCE)
               if ((*ionCollection)[i-1]->GetVolName()=="backing"&&(*ionCollection)[i]->GetVolName()=="expHall")
                 (*ionCollection)[i]->SetBackingOutFlag();
         }
-
+      
+      for (i=0;i<NbHits;i++)
+        {
+          if ((*ionCollection)[i]->GetKE()<=0.0)
+            (*ionCollection)[i]->SetStoppedFlag();
+        }
+      
+      
       if (print) 
         {	
           G4cout<<G4endl;
