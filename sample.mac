@@ -11,7 +11,7 @@
 /Target/NStep 1
 /Target/Report
 /Trigger/SetTrigger 1
-/run/beamOn 500000
+/run/beamOn 50000
 /Results/Tree/Report
-/Results/Tree/Save SRIMstopping.root
+/Results/Tree/Save ICRUstopping_test.root
 /Projectile/Report

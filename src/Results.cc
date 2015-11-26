@@ -28,21 +28,26 @@ void Results::TreeCreate()
   tree= new TTree("tree","tree");
   tree->Branch("stat",&stat,"evNb/I:Ap/I:Zp/I");
   tree->Branch("projGun",&gun,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile when shot from the particle gun
-  tree->Branch("resTargetIn",&rTIn,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon entering the target
-  tree->Branch("resTargetOut",&rTOut,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon leaving the target (if it makes it that far)
-  tree->Branch("resStop",&rStop,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon stopping
+  tree->Branch("projTargetIn",&rTIn,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon entering the target
+  tree->Branch("projTargetOut",&rTOut,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon leaving the target (if it makes it that far)
+  tree->Branch("projStop",&rStop,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon stopping
+  depthtree= new TTree("depthtree","depthtree");
+  depthtree->Branch("projStepData",&depthTracker,"z/D:E/D"); //data of the projectile depth/energy at each step of the simulation
 }
 //---------------------------------------------------------
 void Results::TreeClear()
 {
   tree->Delete("all");
   tree=NULL;
+  depthtree->Delete("all");
+  depthtree=NULL;
   TreeCreate();
 }
 //---------------------------------------------------------
 void Results::TreeReport()
 {
-  tree->Print(); 
+  tree->Print();
+  depthtree->Print();
 }
 //---------------------------------------------------------
 void Results::TreeSave(G4String name)
@@ -54,6 +59,7 @@ void Results::TreeSave(G4String name)
   //tree->AutoSave();
   //tree->SetDirectory(dir);
   tree->Write();
+  depthtree->Write();
   f.Close();
   dir->cd();
   G4cout<<"Tree of simulated parameters saved in file "<<name<<G4endl;
@@ -70,6 +76,7 @@ void Results::FillTree(G4int evtNb, TrackerIonHitsCollection* IonCollection)
  memset(&rTIn,0,sizeof(rTIn));
  memset(&rTOut,0,sizeof(rTOut));
  memset(&rStop,0,sizeof(rStop));
+ memset(&depthTracker,0,sizeof(depthTracker));
 
   if(Nt>0)
     {
@@ -146,8 +153,18 @@ void Results::FillTree(G4int evtNb, TrackerIonHitsCollection* IonCollection)
             default:
 	            break;
 	        }
+	      
     }
    
   tree->Fill();
   IonFill++;
+  
+  //put all data for depth/energy along the track into the depthtree
+  for(Int_t i=0;i<Nt;i++)
+	  {
+	    depthTracker.z=(*IonCollection)[i]->GetPos().getZ()/mm;
+	    depthTracker.E=(*IonCollection)[i]->GetKE()/MeV;
+	    depthtree->Fill();
+	  }
+	  
 }

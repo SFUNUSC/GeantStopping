@@ -42,6 +42,11 @@ typedef struct{
     Double_t b;
     Double_t w;
  } IonInf;
+ 
+typedef struct{
+    Double_t z;
+    Double_t E;
+ } IonDepthTracker;
 
 class Results
 {
@@ -62,7 +67,7 @@ public:
 private:
   
  // ROOT Tree stuff
-  TTree* tree;
+  TTree *tree,*depthtree;
   G4int  IonFill;
 
   Projectile*           theProjectile;
@@ -70,6 +75,7 @@ private:
 
   IonStat       stat;
   IonInf        gun,rTIn,rTOut,rStop; //ion tracking (projectile)
+  IonDepthTracker       depthTracker;
   G4int         Ap,Zp;
 
   size_t soi,sos;
