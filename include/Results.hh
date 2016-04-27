@@ -46,6 +46,8 @@ typedef struct{
 typedef struct{
     Double_t z;
     Double_t E;
+    Double_t t;
+    Double_t b;
  } IonDepthTracker;
 
 class Results

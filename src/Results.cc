@@ -32,7 +32,7 @@ void Results::TreeCreate()
   tree->Branch("projTargetOut",&rTOut,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon leaving the target (if it makes it that far)
   tree->Branch("projStop",&rStop,"x/D:y/D:z/D:px/D:py/D:pz/D:E/D:b/D:w/D"); //projectile upon stopping
   depthtree= new TTree("depthtree","depthtree");
-  depthtree->Branch("projStepData",&depthTracker,"z/D:E/D"); //data of the projectile depth/energy at each step of the simulation
+  depthtree->Branch("projStepData",&depthTracker,"z/D:E/D:t/D:b/D"); //data of the projectile depth/energy at each step of the simulation
 }
 //---------------------------------------------------------
 void Results::TreeClear()
@@ -164,6 +164,8 @@ void Results::FillTree(G4int evtNb, TrackerIonHitsCollection* IonCollection)
 	  {
 	    depthTracker.z=(*IonCollection)[i]->GetPos().getZ()/mm;
 	    depthTracker.E=(*IonCollection)[i]->GetKE()/MeV;
+	    depthTracker.t=(*IonCollection)[i]->GetTime()/ns;
+	    depthTracker.b=(*IonCollection)[i]->GetBeta();
 	    depthtree->Fill();
 	  }
 	  

@@ -3,7 +3,7 @@
 /Projectile/KE 30 MeV
 /Projectile/Focus/X 0. mm
 /Projectile/Focus/Y 0. mm
-/Projectile/Focus/Z -50. mm
+/Projectile/Focus/Z -0.0000000001 mm
 /Projectile/Focus/DX 0. mm
 /Projectile/Focus/DY 0. mm
 /Target/Material G4_Au
@@ -11,7 +11,7 @@
 /Target/NStep 1
 /Target/Report
 /Trigger/SetTrigger 1
-/run/beamOn 50000
+/run/beamOn 100000
 /Results/Tree/Report
-/Results/Tree/Save ICRUstopping_test.root
+/Results/Tree/Save SRIMGoldstopping.root
 /Projectile/Report

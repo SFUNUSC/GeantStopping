@@ -39,6 +39,7 @@ class TrackerIonHit : public G4VHit
       void SetZ(G4int z){Z=z;};
       void SetBeta(G4double b){beta=b;};
       void SetKE(G4double k){KE=k;};
+      void SetTime(G4double t){time=t;};
       void SetWeight(G4double w){weight=w;};
       void SetPos      (G4ThreeVector xyz){ pos = xyz; };
       void SetMom      (G4ThreeVector xyz){ p = xyz; };
@@ -54,6 +55,7 @@ class TrackerIonHit : public G4VHit
       G4double GetBeta(){return beta;};
       G4double GetWeight(){return weight;};
       G4double GetKE(){return KE;};
+      G4double GetTime(){return time;};
       G4ThreeVector GetPos(){ return pos; };
       G4ThreeVector GetMom(){ return p; };
       G4int    GetFlag(){return flag;}
@@ -64,6 +66,7 @@ class TrackerIonHit : public G4VHit
       G4int         Z;
       G4double      beta;
       G4double      KE;
+      G4double      time;
       G4double      weight;
       G4ThreeVector pos;
       G4ThreeVector p;

@@ -1,0 +1,1 @@
+A simple code for trying out different stopping powers in GEANT4.9.4.  Right now the location needs to be manually specified in the PhysicsList.cc.

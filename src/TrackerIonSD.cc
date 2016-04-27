@@ -63,6 +63,7 @@ G4bool TrackerIonSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
 	          newIonHitI->SetVolName(vname);
 	          newIonHitI->SetBeta(vi->GetBeta());
 	          newIonHitI->SetKE(vi->GetKineticEnergy());
+	          newIonHitI->SetTime(vi->GetLocalTime());
 	          newIonHitI->SetPos(vi->GetPosition());
 	          newIonHitI->SetMom(vi->GetMomentum());
 	          newIonHitI->SetA(aParticle->GetParticleDefinition()->GetAtomicMass());
@@ -80,6 +81,7 @@ G4bool TrackerIonSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
        	  newIonHitF->SetVolName(vname);
 	        newIonHitF->SetBeta(vf->GetBeta());
 	        newIonHitF->SetKE(vf->GetKineticEnergy());
+	        newIonHitF->SetTime(vf->GetLocalTime());
 	        newIonHitF->SetMom(vf->GetMomentum());
 	        newIonHitF->SetPos(vf->GetPosition());
 	        newIonHitF->SetA(aParticle->GetParticleDefinition()->GetAtomicMass());
