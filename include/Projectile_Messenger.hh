@@ -27,6 +27,7 @@ class Projectile_Messenger: public G4UImessenger
     G4UIcmdWithAnInteger*      ACmd;
     G4UIcmdWithAnInteger*      ZCmd;
     G4UIcmdWithADoubleAndUnit* KECmd;
+    G4UIcmdWithADoubleAndUnit* KESCmd;
     G4UIcmdWithADoubleAndUnit* fcXCmd;
     G4UIcmdWithADoubleAndUnit* fcDXCmd;
     G4UIcmdWithADoubleAndUnit* fcYCmd;

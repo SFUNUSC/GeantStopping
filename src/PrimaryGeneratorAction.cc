@@ -34,8 +34,10 @@ void PrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
   direction=theProjectile->getDirection();
   particleGun->SetParticleMomentumDirection(direction);
   
-  KE=theProjectile->getKE();
+  //Generate projectile with Gaussian distributed energy
+  KE=CLHEP::RandGauss::shoot(theProjectile->getKE(),theProjectile->getKES());
   particleGun->SetParticleEnergy(KE);
+  //G4cout<<" Energy of projectile: "<< particleGun->GetParticleEnergy()/MeV<< " MeV" <<G4endl;
 
   // G4cout<<" +++++ Generating an event "<<G4endl;
   particleGun->GeneratePrimaryVertex(anEvent);

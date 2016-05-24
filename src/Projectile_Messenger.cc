@@ -21,10 +21,15 @@ Projectile_Messenger::Projectile_Messenger(Projectile* BI)
   ZCmd->SetParameterName("Projectile Z",false);
   ZCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-  KECmd = new G4UIcmdWithADoubleAndUnit("/Projectile/KE",this);
-  KECmd->SetGuidance("Set kinetic energy for the incoming beam.");
+  KECmd = new G4UIcmdWithADoubleAndUnit("/Projectile/KEAvg",this);
+  KECmd->SetGuidance("Set average kinetic energy for the incoming beam.");
   KECmd->SetParameterName("Projectile KE",false);
   KECmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+  
+  KESCmd = new G4UIcmdWithADoubleAndUnit("/Projectile/KEWidth",this);
+  KESCmd->SetGuidance("Set kinetic energy spread (Gaussian FWHM) for the incoming beam.");
+  KESCmd->SetParameterName("Projectile KE",false);
+  KESCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
   fcXCmd = new G4UIcmdWithADoubleAndUnit("/Projectile/Focus/X",this);
   fcXCmd->SetGuidance("Set focal point X position for the incoming beam.");
@@ -89,6 +94,7 @@ Projectile_Messenger::~Projectile_Messenger()
   delete fcDXCmd;
   delete fcDYCmd;
   delete KECmd;
+  delete KESCmd;
   delete RepCmd;
   delete ZCmd;
   delete ACmd;
@@ -106,6 +112,8 @@ void Projectile_Messenger::SetNewValue(G4UIcommand* command,G4String newValue)
     { theProjectile->setZ(ZCmd->GetNewIntValue(newValue));}
   if( command == KECmd )
     { theProjectile->setKE(KECmd->GetNewDoubleValue(newValue));}
+  if( command == KESCmd )
+    { theProjectile->setKES(KECmd->GetNewDoubleValue(newValue));}
   if( command == fcXCmd )
     { theProjectile->setfcX(fcXCmd->GetNewDoubleValue(newValue));}
   if( command == fcDXCmd )

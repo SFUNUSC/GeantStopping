@@ -20,7 +20,8 @@ public:
   void Report();
   void setA(G4int);
   void setZ(G4int);
-  void setKE(G4double); 
+  void setKE(G4double);
+  void setKES(G4double); 
   void setfcX(G4double);
   void setfcDX(G4double);
   void setfcY(G4double);
@@ -35,6 +36,7 @@ public:
   G4int getA()    {return A;}
   G4int getZ()    {return Z;}
   G4double getKE(){return KE;};
+  G4double getKES(){return KES;};
   G4double getAta0(){return ata0;}
   G4double getBta0(){return bta0;}
   G4ThreeVector getPosition();
@@ -48,6 +50,7 @@ private:
   G4int A;
   G4int Z;
   G4double KE;
+  G4double KES;
   G4double fcX;
   G4double fcDX;
   G4double fcY;

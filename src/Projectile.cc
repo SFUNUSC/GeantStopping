@@ -113,8 +113,17 @@ void Projectile::setKE(G4double KEin)
 {
 
   KE=KEin;
-G4cout<<"----> Kin. En. of the projectile set to "<<
+G4cout<<"----> Average kin. En. of the projectile set to "<<
  G4BestUnit(KE,"Energy")<<G4endl;
+
+}
+//---------------------------------------------------------
+void Projectile::setKES(G4double Sin)
+{
+
+  KES=Sin;
+G4cout<<"----> Kin. En. spread (gaussuian FWHM) of the projectile set to "<<
+ G4BestUnit(KES,"Energy")<<G4endl;
 
 }
 //---------------------------------------------------------

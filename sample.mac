@@ -1,6 +1,7 @@
 /Projectile/A 22
 /Projectile/Z 10
-/Projectile/KE 30 MeV
+/Projectile/KEAvg 10.918 MeV
+/Projectile/KEWidth 2.8525 MeV
 /Projectile/Focus/X 0. mm
 /Projectile/Focus/Y 0. mm
 /Projectile/Focus/Z -0.0000000001 mm
@@ -11,7 +12,7 @@
 /Target/NStep 1
 /Target/Report
 /Trigger/SetTrigger 1
-/run/beamOn 100000
+/run/beamOn 1000000
 /Results/Tree/Report
 /Results/Tree/Save SRIMGoldstopping.root
 /Projectile/Report
