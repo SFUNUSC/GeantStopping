@@ -1,10 +1,14 @@
+/Physics/Step 0.005 um
+/Physics/StoppingTable stopping_data/SRIM
+#INITIALIZATION IS REQUIRED ONCE THE PHYSICS COMMANDS HAVE BEEN SET UP
+/Run/Initialize
 /Projectile/A 22
 /Projectile/Z 10
 /Projectile/KEAvg 10.918 MeV
 /Projectile/KEWidth 2.8525 MeV
 /Projectile/Focus/X 0. mm
 /Projectile/Focus/Y 0. mm
-/Projectile/Focus/Z -0.0000000001 mm
+/Projectile/Focus/Z 0. mm
 /Projectile/Focus/DX 0. mm
 /Projectile/Focus/DY 0. mm
 /Target/Material G4_Au
@@ -12,7 +16,7 @@
 /Target/NStep 1
 /Target/Report
 /Trigger/SetTrigger 1
-/run/beamOn 1000000
+/run/beamOn 100000
 /Results/Tree/Report
 /Results/Tree/Save SRIMGoldstopping.root
 /Projectile/Report

@@ -29,10 +29,18 @@
 #include "Results_Messenger.hh"
 #include "Projectile.hh"
 #include "Projectile_Messenger.hh"
+#include "Run_Messenger.hh"
 #include "RunAction.hh"
 
 int main(int argc,char** argv) 
 {
+  if(argc<=1)
+    {
+      G4cout<<G4endl<<"GeantStopping batch_file"<<G4endl;
+      G4cout<<"------------------------"<<G4endl<<G4endl;
+      G4cout<<"Simulates the stopping of a user defined ion with user defined energy distribution in a stopper made of user defined material.  It is possible to specify custom stopping power tables."<<G4endl<<G4endl;
+      exit(-1);
+    }
 
  // Seed the random number generator manually
   G4long myseed = time(NULL);
@@ -57,7 +65,9 @@ int main(int argc,char** argv)
   // set mandatory user action clas
   PhysicsList *thePhysicsList = new PhysicsList(theProjectile);
   runManager->SetUserInitialization(thePhysicsList);
- 
+  
+  Run_Messenger* runMessenger;
+  runMessenger = new Run_Messenger(runManager,thePhysicsList);
  
   PrimaryGeneratorAction* generatorAction= new PrimaryGeneratorAction(theDetector,theProjectile);
   runManager->SetUserAction(generatorAction);
@@ -75,73 +85,19 @@ int main(int argc,char** argv)
   EventAction_Messenger* eventActionMessenger;
   eventActionMessenger = new EventAction_Messenger(eventAction); 
 
-  G4UIsession* session=0;
-
-  #ifdef G4VIS_USE  
-  G4VisManager* visManager = new VisManager; 
-  #endif  
-
-  if (argc==1)   // Define UI session for interactive mode.
-    {
-
-      #ifdef G4VIS_USE
-      // visualization manager
-      visManager->Initialize();
-      #endif
-
-      // G4UIterminal is a (dumb) terminal.
-      #ifdef G4UI_USE_ROOT
-      // G4URoot is a ROOT based GUI.
-      session = new G4UIRoot(argc,argv);
-      #else
-      #ifdef G4UI_USE_XM
-      session = new G4UIXm(argc,argv);
-      #else           
-      #ifdef G4UI_USE_TCSH
-      session = new G4UIterminal(new G4UItcsh);      
-      #else
-      session = new G4UIterminal();
-      #endif
-      #endif
-      #endif
-    }
-
-  // Initialize G4 kernel
-  runManager->Initialize();
-
   // get the pointer to the UI manager and set verbosities
   G4UImanager* UI = G4UImanager::GetUIpointer();
 
-  if (session)   // Define UI session for interactive mode.
-    {
-      // G4UIterminal is a (dumb) terminal.
-      
-      #ifdef G4UI_USE_XM
-      // Customize the G4UIXm menubar with a macro file :
-      UI->ApplyCommand("/control/execute gui/gui.mac");
-      #endif
-      session->SessionStart();
-      delete session;
-    }
-  else           // Batch mode
-    { 
-      G4String command = "/control/execute ";
-      G4String fileName = argv[1];
-      UI->ApplyCommand(command+fileName);
-    }
-
-  // job termination
-  if(argc==1)
-    {
-      #ifdef G4VIS_USE
-      delete visManager;
-      #endif
-    }
-
+  // Read batch file
+  G4String command = "/control/execute ";
+  G4String fileName = argv[1];
+  UI->ApplyCommand(command+fileName);
+  
   
   delete ProjectileMessenger;
   delete resultsMessenger;
   delete eventActionMessenger;
+  delete runMessenger;
   delete runManager;
 
   return 0;

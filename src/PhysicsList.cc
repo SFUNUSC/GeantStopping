@@ -2,7 +2,8 @@
 
 PhysicsList::PhysicsList(Projectile*Proj):theProjectile(Proj)
 {
-  
+  stepSize=0.05*um;
+  customStopping=false;
 }
 
 
@@ -45,8 +46,10 @@ void PhysicsList::ConstructProcess()
 void PhysicsList::ConstructEM()
 {
 
-  theParticleIterator->reset();
+  G4cout<<"Setting up physics..."<<G4endl;
+  G4cout<<"Step size: "<< stepSize/um << " um" << G4endl;
 
+  theParticleIterator->reset();
 
   while( (*theParticleIterator)() ){
 
@@ -84,7 +87,7 @@ void PhysicsList::ConstructEM()
    else if(particleName=="alpha") {
       pmanager->AddProcess(new G4hMultipleScattering, -1, 1, 1);
       G4ionIonisation* alphaIoni = new G4ionIonisation();
-      alphaIoni->SetStepFunction(0.05, 0.05*um);
+      alphaIoni->SetStepFunction(0.05, stepSize);
       pmanager->AddProcess(alphaIoni,                 -1, 2, 2);
       //pmanager->AddProcess(new G4NuclearStopping(),   -1, 3,-1); // small for light particles
       pmanager->AddProcess(new G4StepLimiter,        -1,-1, 4); // what does this do?
@@ -95,10 +98,16 @@ void PhysicsList::ConstructEM()
      
       
       G4IonCustomModel* theModel= new G4IonCustomModel(); // Custom replacement for G4IonParametrisedLossModel
-      theModel->RemoveDEDXTable("ICRU73");
-      theModel->AddDEDXTable("SRIM",new G4IonCustomStoppingData("stopping_data/SRIM"),new G4IonDEDXScalingICRU73()); //add stopping power data from data files 
+      if(customStopping)
+        {
+          G4cout<<"Will use custom stopping power tables from directory: "<<cspath<<G4endl;
+          theModel->RemoveDEDXTable("ICRU73");
+          theModel->AddDEDXTable("SRIM",new G4IonCustomStoppingData(cspath),new G4IonDEDXScalingICRU73()); //add stopping power data from data files
+        }
+      else
+        G4cout<<"Default stopping power tables used."<<G4endl;
       
-	    ionIoni->SetStepFunction(0.05, 0.05*um);
+	    ionIoni->SetStepFunction(0.05, stepSize);
 	    ionIoni->SetEmModel(theModel);
 	    pmanager->AddProcess(ionIoni,                   -1, 2, 2);
       pmanager->AddProcess(new G4NuclearStopping(),   -1, 3,-1);

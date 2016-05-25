@@ -31,7 +31,7 @@ void EventAction::EndOfEventAction(const G4Event* evt)
 
   G4int evtNb=evt->GetEventID();
 
-  if (evtNb%1000 == 0) 
+  if (evtNb%100 == 0) 
     {
       gettimeofday(&tc,NULL);
       ts=run_action->GetStartTime();
