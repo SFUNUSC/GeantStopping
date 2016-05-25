@@ -1,1 +1,38 @@
-A simple code for trying out different stopping powers in GEANT4.9.4.  Right now the location needs to be manually specified in the PhysicsList.cc.
+A simple code for trying out different stopping powers in GEANT4.9.4.
+
+
+INSTALLATION
+
+Complile using GNU make.  Depends on GEANT4, CLHEP, and ROOT (results are saved to ROOT tree files).  Requires proper setup of environment variables for each, for example by adding the follwing lines to ~/.bashrc (substituting the appropriate paths):
+
+#ROOT configuration
+export ROOTSYS=/path/to/root
+export ROOTINC=/path/to/root/include
+export ROOTLIB=/path/to/root/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$ROOTSYS/lib/
+export PATH=$PATH:$ROOTSYS/bin
+
+#CLHEP configuration
+export CLHEPSYS=/path/to/clhep
+export PATH=$PATH:$CLHEPSYS/bin:$CLHEPSYS/lib
+
+#for GEANT4
+#the next line should point to the env.sh file generated upon installation/configuration of GEANT4
+source /path/to/env.sh
+export G4INSTALL=/path/to/geant4_install_directory
+
+Tested with GEANT4.9.4 on Scientific Linux 6, Ubuntu 14.04, and Ubuntu 15.10.
+
+Reimplemented GEANT4 classes:
+G4IonParametrisedLossModel (GEANT4.9.4) - reimplemented as G4IonCustomModel to allow for user defined stopping powers
+G4IonStoppingData (GEANT4.9.4) - reimplemented as G4IonCustomStoppingData to allow for user defined stopping powers
+
+
+RUNNING
+
+The directory containing stopping powers should be specified in the batch file being run: 
+
+/Physics/StoppingTable path/to/stopping_powers
+
+See the included sample batch file for other parameters.
+
