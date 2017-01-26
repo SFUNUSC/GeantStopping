@@ -94,6 +94,8 @@ void Target::setTargetMaterial(G4String materialName)
   // search the material by its name 
   TargetMaterial = materials->FindMaterial(materialName);  
   Target_log->SetMaterial(TargetMaterial);
+  TargetA=Target_log->GetMaterial()->GetA();
+  TargetZ=Target_log->GetMaterial()->GetZ();
   G4cout<<"----> Target material set to     "<<Target_log->GetMaterial()->GetName()<< G4endl;                 
 }
 //-------------------------------------------------------------------

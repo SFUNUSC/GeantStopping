@@ -58,7 +58,7 @@ class Target
   //materials
   Materials* materials;
   G4Material* TargetMaterial;
-  G4int TargetA,TargetZ;
+  G4double TargetA,TargetZ;
   G4double TargetEx;
   G4double TargetTau;
   //default position

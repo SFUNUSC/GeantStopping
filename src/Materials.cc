@@ -11,6 +11,11 @@
   Cu = man->FindOrBuildMaterial("G4_Cu");
   C = man->FindOrBuildMaterial("G4_C");
   Au = man->FindOrBuildMaterial("G4_Au");
+  Pb = man->FindOrBuildMaterial("G4_Pb");
+  Sn = man->FindOrBuildMaterial("G4_Sn");
+  Ni = man->FindOrBuildMaterial("G4_Ni");
+  Zr = man->FindOrBuildMaterial("G4_Zr");
+  Ta = man->FindOrBuildMaterial("G4_Ta");
   
   // Compounds
   Vacuum = man->FindOrBuildMaterial("G4_Galactic");

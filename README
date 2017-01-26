@@ -3,7 +3,7 @@ A simple code for trying out different stopping powers in GEANT4.9.4.
 
 INSTALLATION
 
-Complile using GNU make.  Depends on GEANT4, CLHEP, and ROOT (results are saved to ROOT tree files).  Requires proper setup of environment variables for each, for example by adding the follwing lines to ~/.bashrc (substituting the appropriate paths):
+Compile using GNU make.  Depends on GEANT4, CLHEP, and ROOT (results are saved to ROOT tree files).  Requires proper setup of environment variables for each, for example by adding the follwing lines to ~/.bashrc (substituting the appropriate paths):
 
 #ROOT configuration
 export ROOTSYS=/path/to/root

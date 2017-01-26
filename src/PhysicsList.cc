@@ -48,6 +48,10 @@ void PhysicsList::ConstructEM()
 
   G4cout<<"Setting up physics..."<<G4endl;
   G4cout<<"Step size: "<< stepSize/um << " um" << G4endl;
+  if(customStopping)
+    G4cout<<"Will use custom GenericIon stopping power tables from directory: "<<cspath<<G4endl;
+  else
+    G4cout<<"Will use default GenericIon stopping power tables."<<G4endl;
 
   theParticleIterator->reset();
 
@@ -100,12 +104,9 @@ void PhysicsList::ConstructEM()
       G4IonCustomModel* theModel= new G4IonCustomModel(); // Custom replacement for G4IonParametrisedLossModel
       if(customStopping)
         {
-          G4cout<<"Will use custom stopping power tables from directory: "<<cspath<<G4endl;
           theModel->RemoveDEDXTable("ICRU73");
-          theModel->AddDEDXTable("SRIM",new G4IonCustomStoppingData(cspath),new G4IonDEDXScalingICRU73()); //add stopping power data from data files
+          theModel->AddDEDXTable("Custom",new G4IonCustomStoppingData(cspath),new G4IonDEDXScalingICRU73()); //add stopping power data from data files
         }
-      else
-        G4cout<<"Default stopping power tables used."<<G4endl;
       
 	    ionIoni->SetStepFunction(0.05, stepSize);
 	    ionIoni->SetEmModel(theModel);
