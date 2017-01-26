@@ -22,6 +22,11 @@ class Materials
   G4Material* Cu;
   G4Material* C;
   G4Material* Au;
+  G4Material* Pb;
+  G4Material* Sn;
+  G4Material* Ni;
+  G4Material* Zr;
+  G4Material* Ta;
   
   // Compounds
   G4Material* Vacuum;

@@ -33,9 +33,7 @@ void TrackerIonSD::Initialize(G4HCofThisEvent*)
 G4bool TrackerIonSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
 {
 
-  G4Track* theTrack=new G4Track();
-  theTrack=aStep->GetTrack();
-
+  G4Track* theTrack=aStep->GetTrack();
   
   G4StepPoint*   vi;
   G4StepPoint*   vf;
